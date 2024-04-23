@@ -57,6 +57,12 @@ class ConstructionStep(IntEnum):
         }[s.lower()]
 
 
+class Label(StrEnum):
+    NONE = 'NONE'
+    CODE = 'CODE'
+    NONCODE = 'NONCODE'
+
+
 class Language(StrEnum):
     '''Supported programming languages.'''
     C = 'c'
