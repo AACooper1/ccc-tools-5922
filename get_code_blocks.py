@@ -1,10 +1,13 @@
 from defines import REPODIR_PATH
 from defines import CORPUSDIR_PATH
+from defines import Label
+from defines import Language
 from pathlib import Path
 from os import listdir
 from numpy import std, average
 from xml.etree import ElementTree as ET
 
+import json
 import numpy.random as rd
 import re
 
@@ -122,35 +125,52 @@ def get_clike_sections(comment_lengths, c_or_cpp):
     
     return random_sample
 
+def sections_to_dicts(sections):
+    return [
+        {
+            'text': "".join(section),
+            'label': Label.CODE,
+        }
+        for section in sections
+    ]
+
 comment_lengths = get_comment_lengths()
 
 python_sections = get_python_sections(comment_lengths)
 c_sections = get_clike_sections(comment_lengths, 0)
 cpp_sections = get_clike_sections(comment_lengths, 1)
 
-print("##################")
-print("PYTHON STARTS HERE")
-print("##################")
+Path('code_blocks').mkdir(exist_ok=True)
+for sections, language in zip(
+        (python_sections, c_sections, cpp_sections),
+        (Language.PYTHON, Language.C, Language.CPP),
+):
+    with open(f'code_blocks/{language}.json', 'w') as f:
+        json.dump(sections_to_dicts(sections), f)
 
-for section in python_sections:
-    for line in section:
-        print(line, end='')
-    print("\n\n =============================== \n\n")
+# print("##################")
+# print("PYTHON STARTS HERE")
+# print("##################")
 
-print("###############")
-print("C++ STARTS HERE")
-print("###############")
+# for section in python_sections:
+#     for line in section:
+#         print(line, end='')
+#     print("\n\n =============================== \n\n")
 
-for section in cpp_sections:
-    for line in section:
-        print(line, end='')
-    print("\n\n =============================== \n\n")
+# print("###############")
+# print("C++ STARTS HERE")
+# print("###############")
 
-print("#############")
-print("C STARTS HERE")
-print("#############")
+# for section in cpp_sections:
+#     for line in section:
+#         print(line, end='')
+#     print("\n\n =============================== \n\n")
 
-for section in c_sections:
-    for line in section:
-        print(line, end='')
-    print("\n\n =============================== \n\n")
+# print("#############")
+# print("C STARTS HERE")
+# print("#############")
+
+# for section in c_sections:
+#     for line in section:
+#         print(line, end='')
+#     print("\n\n =============================== \n\n")
