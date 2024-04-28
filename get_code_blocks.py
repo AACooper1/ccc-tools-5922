@@ -65,7 +65,7 @@ def get_python_sections(comment_lengths):
 
     random_sample = []
 
-    while len(random_sample) < 25:
+    while len(random_sample) < 50:
         random_index = rd.randint(len(all_python_lines))
         random_length = rd.choice(comment_lengths)
         random_section = all_python_lines[random_index : random_index + random_length]
@@ -113,7 +113,7 @@ def get_clike_sections(comment_lengths, c_or_cpp):
 
     random_sample = []
 
-    while len(random_sample) < 25:
+    while len(random_sample) < 50:
         random_index = rd.randint(len(all_cpp_lines))
         random_length = rd.choice(comment_lengths)
         random_section = all_cpp_lines[random_index : random_index + random_length]
