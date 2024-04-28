@@ -6,6 +6,7 @@ from pathlib import Path
 import random
 import sys
 
+from build import strip_comment_delimiters
 from defines import Label
 from defines import Language
 from defines import NoteType
@@ -78,6 +79,7 @@ def sample():
             _filter_sample(lang_sample)
             print(f"{language} {len(lang_sample)}")
 
+        map(lambda comment: strip_comment_delimiters(comment, language), lang_sample)
         _sample_to_json(lang_sample, PATH[language])
 
 
